@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <div class="card-title">Halaman {{ halaman }}</div>
+    </div>
+    <div class="card-body">
+        <form action="/upd" method="post" id="form-upd">
+            <input type="hidden" name="id_data" value="{{ data[0].id_data }}">
+
+            <div class="form-group">
+                <label for="judul">Judul</label>
+                <input type="text" class="form-control" id="judul" name="judul" value="{{ data[0].judul }}" />
+            </div>
+            <div class="form-group">
+                <label for="link">Link</label>
+                <input type="text" class="form-control" id="link" name="link" value="{{ data[0].link }}" />
+            </div>
+            <div class="form-group">
+                <label for="text">Text</label>
+                <input type="text" class="form-control" id="text" name="text" value="{{ data[0].text }}" />
+            </div>
+            <button type="submit" class="btn btn-success btn-sm">Simpan</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascript %}
+<script>
+    $('#form-upd').submit(function () {
+        $.ajax({
+            type: $(this).attr('method'),
+            url: $(this).attr('action'),
+            data: $(this).serialize(),
+            dataType: 'json',
+            success: function (response) {
+                swal({
+                    title: response.title,
+                    text: response.text,
+                    icon: response.icon,
+                    button: response.button,
+                }).then(function () {
+                    window.location.href = '/tentang';
+                });
+            }
+        })
+        return false;
+    });
+</script>
+{% endblock %}
