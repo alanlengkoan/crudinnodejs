@@ -32,14 +32,11 @@ router.addRoute("/", function (request, response) {
 });
 
 router.addRoute("/tentang", function (request, response) {
-    mysqli.query("SELECT * FROM tb_data", function (error, results, fields) {
-        var data = {
-            halaman: 'Tentang',
-            title: 'Tentang',
-            data: results
-        };
-        view(200, './views/tentang.html', data, request, response);
-    });
+    var data = {
+        halaman: 'Tentang',
+        title: 'Tentang',
+    };
+    view(200, './views/tentang.html', data, request, response);
 });
 
 router.addRoute("/kontak", function (request, response) {
