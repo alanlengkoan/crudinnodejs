@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <div class="card-title">Halaman {{ halaman }}</div>
+    </div>
+    <div class="card-body">
+        <a href="/form_add" class="btn btn-success btn-sm mb-2">Tambah</a>
+
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Judul</th>
+                    <th>Link</th>
+                    <th>Text</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for x in data %}
+                <tr>
+                    <td>{{ x.judul }}</td>
+                    <td>{{ x.link }}</td>
+                    <td>{{ x.text }}</td>
+                    <td>
+                        <a class="btn btn-primary btn-sm" href="form_upd/{{ x.id_data }}">Ubah</a>
+                        <button type="button" id="del" class="btn btn-danger btn-sm" data-id="{{ x.id_data }}">Hapus</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascript %}
+<script>
+    $(document).on('click', '#del', function (e) {
+        var ini = $(this);
+
+        $.ajax({
+            type: 'POST',
+            url: '/del',
+            data: {
+                id: ini.data('id'),
+            },
+            dataType: 'json',
+            success: function (response) {
+                swal({
+                    title: response.title,
+                    text: response.text,
+                    icon: response.icon,
+                    button: response.button,
+                }).then(function () {
+                    location.reload();
+                });
+            }
+        })
+    });
+</script>
+{% endblock %}
