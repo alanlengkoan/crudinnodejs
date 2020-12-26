@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends '../base.html' %}
 
 {% block title %}
 {{ title }}
@@ -10,7 +10,7 @@
         <div class="card-title">Halaman {{ halaman }}</div>
     </div>
     <div class="card-body">
-        <a href="/form_add" class="btn btn-success btn-sm mb-2">Tambah</a>
+        <a href="/admin/crud/add" class="btn btn-success btn-sm mb-2">Tambah</a>
 
         <table class="table table-striped table-bordered">
             <thead>
@@ -28,7 +28,7 @@
                     <td>{{ x.link }}</td>
                     <td>{{ x.text }}</td>
                     <td>
-                        <a class="btn btn-primary btn-sm" href="form_upd/{{ x.id_data }}">Ubah</a>
+                        <a class="btn btn-primary btn-sm" href="crud/upd/{{ x.id_data }}">Ubah</a>
                         <button type="button" id="del" class="btn btn-danger btn-sm" data-id="{{ x.id_data }}">Hapus</button>
                     </td>
                 </tr>
@@ -46,7 +46,7 @@
 
         $.ajax({
             type: 'POST',
-            url: '/del',
+            url: '/admin/crud/del',
             data: {
                 id: ini.data('id'),
             },

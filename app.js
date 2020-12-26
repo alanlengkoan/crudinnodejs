@@ -50,8 +50,28 @@ router.addRoute("/kontak", function (request, response) {
     view(200, './views/kontak.html', data, request, response);
 });
 
+// begin:: route for admin
+router.addRoute("/admin", function (request, response) {
+    var data = {
+        halaman: 'Dashboard',
+        title: 'Dashboard Admin'
+    };
+    view(200, './views/admin/base.html', data, request, response);
+});
+
+router.addRoute("/admin/crud", function (request, response) {
+    mysqli.query("SELECT * FROM tb_data", function (error, results, fields) {
+        var data = {
+            halaman: 'CRUD',
+            title: 'CRUD',
+            data: results
+        };
+        view(200, './views/admin/crud/view.html', data, request, response);
+    });
+});
+
 // untuk form dan proses tambah data
-router.addRoute("/form_add", function (request, response) {
+router.addRoute("/admin/crud/add", function (request, response) {
     var method = request.method;
 
     if (method == 'POST') {
@@ -90,24 +110,24 @@ router.addRoute("/form_add", function (request, response) {
             halaman: 'Tambah Data',
             title: 'Tambah Data'
         };
-        view(200, './views/form_add.html', data, request, response);
+        view(200, './views/admin/crud/add.html', data, request, response);
     }
 });
 
 // untuk form ubah
-router.addRoute("/form_upd/:id", function (request, response) {
+router.addRoute("/admin/crud/upd/:id", function (request, response) {
     mysqli.query("SELECT * FROM tb_data WHERE id_data = '" + this.params.id + "'", function (error, results, fields) {
         var data = {
             halaman: 'Ubah Data',
             title: 'Ubah Data',
             data: results
         };
-        view(200, './views/form_upd.html', data, request, response);
+        view(200, './views/admin/crud/upd.html', data, request, response);
     });
 });
 
 // untuk proses ubah data
-router.addRoute("/upd", function (request, response) {
+router.addRoute("/admin/crud/upd", function (request, response) {
     var method = request.method;
 
     if (method == 'POST') {
@@ -139,7 +159,7 @@ router.addRoute("/upd", function (request, response) {
 });
 
 // untuk hapus data
-router.addRoute("/del", function (request, response) {
+router.addRoute("/admin/crud/del", function (request, response) {
     var method = request.method;
 
     if (method == 'POST') {
@@ -168,15 +188,6 @@ router.addRoute("/del", function (request, response) {
             })
         });
     }
-});
-
-// begin:: route for admin
-router.addRoute("/admin", function (request, response) {
-    var data = {
-        halaman: 'Dashboard',
-        title: 'Dashboard Admin'
-    };
-    view(200, './views/admin/base.html', data, request, response);
 });
 // end:: route for admin
 

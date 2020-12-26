@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends '../base.html' %}
 
 {% block title %}
 {{ title }}
@@ -10,7 +10,7 @@
         <div class="card-title">Halaman {{ halaman }}</div>
     </div>
     <div class="card-body">
-        <form action="/upd" method="post" id="form-upd">
+        <form action="/admin/crud/upd" method="post" id="form-upd">
             <input type="hidden" name="id_data" value="{{ data[0].id_data }}">
 
             <div class="form-group">
@@ -46,7 +46,7 @@
                     icon: response.icon,
                     button: response.button,
                 }).then(function () {
-                    window.location.href = '/tentang';
+                    window.location.href = '/admin/crud';
                 });
             }
         })
