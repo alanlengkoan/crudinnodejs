@@ -50,6 +50,14 @@ router.addRoute("/kontak", function (request, response) {
     view(200, './views/kontak.html', data, request, response);
 });
 
+router.addRoute("/masuk", function (request, response) {
+    var data = {
+        halaman: 'Masuk',
+        title: 'Masuk'
+    };
+    view(200, './views/masuk.html', data, request, response);
+});
+
 // begin:: route for admin
 router.addRoute("/admin", function (request, response) {
     var data = {
