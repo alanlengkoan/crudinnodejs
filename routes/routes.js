@@ -1,5 +1,8 @@
+// package
 var routes = require('routes')();
 var qString = require('querystring');
+var jwt = require('jsonwebtoken');
+var bcryptjs = require('bcryptjs');
 var myFunction = require('./../helpers/my_function.js');
 
 // untuk koneksi
@@ -42,6 +45,61 @@ routes.addRoute("/masuk", function (request, response) {
         title: 'Masuk'
     };
     myFunction.view(200, './views/masuk.html', data, request, response);
+});
+
+routes.addRoute("/daftar", function (request, response) {
+    var method = request.method;
+
+    if (method == 'POST') {
+        var data_post = '';
+        request.on('data', function (params) {
+            data_post += params;
+        });
+
+        request.on('end', function () {
+            data_post = qString.parse(data_post);
+
+            // hash password
+            async function hashPassword(password, round) {
+                try {
+                    let hashPassword = await bcryptjs.hash(password, round);
+                    return hashPassword;
+                } catch (err) {
+                    return err;
+                }
+            };
+
+            hashPassword(data_post.password, 8).then((resultPassword) => {
+                mysqli.query('INSERT INTO tb_users SET ?', {
+                    nama: data_post.nama,
+                    username: data_post.username,
+                    password: resultPassword,
+                    level: 'users',
+                }, function (error, results, fields) {
+                    if (error) {
+                        console.log(error);
+                    } else {
+                        response.writeHead(200, {
+                            "Content-Type": "application/json"
+                        });
+                        var json = JSON.stringify({
+                            title: 'Berhasil!',
+                            text: 'Data ditambahkan',
+                            icon: 'success',
+                            button: 'Ok!'
+                        });
+                    }
+                    response.end();
+                });
+            });
+        });
+    } else {
+        var data = {
+            halaman: 'Daftar',
+            title: 'Daftar'
+        };
+        myFunction.view(200, './views/daftar.html', data, request, response);
+    }
 });
 
 // begin:: route for admin
