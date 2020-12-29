@@ -40,11 +40,54 @@ routes.addRoute("/kontak", function (request, response) {
 });
 
 routes.addRoute("/masuk", function (request, response) {
-    var data = {
-        halaman: 'Masuk',
-        title: 'Masuk'
-    };
-    myFunction.view(200, './views/masuk.html', data, request, response);
+    var method = request.method;
+
+    if (method === 'POST') {
+        var data_post = '';
+        request.on('data', function (params) {
+            data_post += params;
+        });
+
+        request.on('end', function () {
+            data_post = qString.parse(data_post);
+
+            mysqli.query('SELECT * FROM tb_users WHERE username = ?', [data_post.username], async (error, results, fields) => {
+                if (results.length > 0) {
+                    // untuk mengecek password
+                    let hashPassword = await bcryptjs.compare(data_post.password, results[0].password);
+                    // apabila password benar
+                    if (hashPassword === true) {
+                        const id_users = results[0].id_users;
+                        const login = true;
+                        const token = jwt.sign({
+                            id: id_users
+                        }, process.env.JWT_SECRET, {
+                            expiresIn: process.env.JWT_EXPIRES_IN
+                        });
+                        const cookieOptions = {
+                            expires: new Date(
+                                Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
+                            ),
+                            httpOnly: true
+                        }
+                        // untuk redirect
+                        console.log('Berhasil login!');
+                    } else {
+                        console.log('Username atau Password Anda salah!');
+                    }   
+                } else {
+                    console.log('Username atau Password Anda salah!');
+                }
+                response.end();
+            });
+        });
+    } else {
+        var data = {
+            halaman: 'Masuk',
+            title: 'Masuk'
+        };
+        myFunction.view(200, './views/masuk.html', data, request, response);
+    }
 });
 
 routes.addRoute("/daftar", function (request, response) {
@@ -70,12 +113,15 @@ routes.addRoute("/daftar", function (request, response) {
             };
 
             hashPassword(data_post.password, 8).then((resultPassword) => {
-                mysqli.query('INSERT INTO tb_users SET ?', {
+                // data yang akun disimpan
+                var data = {
                     nama: data_post.nama,
                     username: data_post.username,
                     password: resultPassword,
-                    level: 'users',
-                }, function (error, results, fields) {
+                    level: 'users'
+                };
+
+                mysqli.query('INSERT INTO tb_users SET ?', data, (error, results, fields) => {
                     if (error) {
                         console.log(error);
                     } else {

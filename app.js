@@ -3,6 +3,11 @@ var url = require('url');
 var fs = require('fs');
 var myFunction = require('./helpers/my_function.js');
 
+var express = require('express');
+var cookieParser = require('cookie-parser');
+var app = express();
+app.use(cookieParser());
+
 // untuk routes
 var router = require('./routes/routes');
 // untuk host
