@@ -5,6 +5,18 @@ var jwt = require('jsonwebtoken');
 var bcryptjs = require('bcryptjs');
 var myFunction = require('./../helpers/my_function.js');
 
+// express
+const express = require('express');
+const session = require('express-session');
+const app = express();
+
+// untuk session
+app.use(session({
+    secret: 'my-key',
+    resave: false,
+    saveUninitialized: true,
+}));
+
 // untuk koneksi
 var mysqli = require('./../configs/connect');
 mysqli.connect((error) => {
@@ -70,11 +82,10 @@ routes.addRoute("/masuk", function (request, response) {
                             ),
                             httpOnly: true
                         }
-                        // untuk redirect
                         console.log('Berhasil login!');
                     } else {
                         console.log('Username atau Password Anda salah!');
-                    }   
+                    }
                 } else {
                     console.log('Username atau Password Anda salah!');
                 }
@@ -150,6 +161,8 @@ routes.addRoute("/daftar", function (request, response) {
 
 // begin:: route for admin
 routes.addRoute("/admin", function (request, response) {
+    console.log(request.session);
+
     var data = {
         halaman: 'Dashboard',
         title: 'Dashboard Admin'
