@@ -19,6 +19,7 @@ app.use(session({
 
 // untuk koneksi
 var mysqli = require('./../configs/connect');
+const my_function = require('./../helpers/my_function.js');
 mysqli.connect((error) => {
     if (error) {
         console.log(error);
@@ -161,8 +162,6 @@ routes.addRoute("/daftar", function (request, response) {
 
 // begin:: route for admin
 routes.addRoute("/admin", function (request, response) {
-    console.log(request.session);
-
     var data = {
         halaman: 'Dashboard',
         title: 'Dashboard Admin'
@@ -199,6 +198,8 @@ routes.addRoute("/admin/crud/add", function (request, response) {
                 judul: data_post.judul,
                 link: data_post.link,
                 text: data_post.text,
+                ins: myFunction.dateTime(),
+                upd: myFunction.dateTime(),
             }, function (error, results, fields) {
                 if (error) {
                     console.log(error);
