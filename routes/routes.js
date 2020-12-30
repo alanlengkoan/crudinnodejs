@@ -250,7 +250,7 @@ routes.addRoute("/admin/crud/upd", function (request, response) {
 
         request.on('end', function () {
             data_post = qString.parse(data_post);
-            mysqli.query('UPDATE tb_data SET judul = ?, link = ?, text = ? WHERE id_data = ?', [data_post.judul, data_post.link, data_post.text, data_post.id_data], function (error, results, fields) {
+            mysqli.query('UPDATE tb_data SET judul = ?, link = ?, text = ?, upd = ? WHERE id_data = ?', [data_post.judul, data_post.link, data_post.text, myFunction.dateTime(), data_post.id_data], function (error, results, fields) {
                 if (error) {
                     console.log(error);
                 } else {
