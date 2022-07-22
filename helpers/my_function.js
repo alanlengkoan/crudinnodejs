@@ -1,18 +1,21 @@
-var swig = require('swig');
+var ejs = require('ejs');
+var fs = require('fs');
 
 // untuk fungsi
 module.exports = {
     view: function (kode, path, data, request, response) {
-        var file = swig.compileFile(path)(data);
+        var htmlContent = fs.readFileSync(__dirname + '/../views/' + path, 'utf8');
+        var htmlRenderized = ejs.render(htmlContent, data);
         response.writeHead(kode, {
             'Content-Type': 'text/html'
         });
-        response.end(file);
+        response.write(htmlRenderized);
+        response.end();
     },
 
     dateTime: function () {
         var date = new Date();
-        
+
         var bulan = date.getUTCMonth() + 1;
         var hari = date.getUTCDate();
         var tahun = date.getUTCFullYear();
