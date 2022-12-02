@@ -18,6 +18,10 @@ function serverCallback(request, response) {
     }
 }
 
-http.createServer(serverCallback).listen(8080, '127.0.0.1');
+const server = http.createServer(serverCallback);
+const port = 8080;
+const host = 'localhost';
 
-console.log('Server sedang berjalan..');
+server.listen(port, host, () => {
+    console.log(`Server berjalan pada http://${host}:${port}`);
+});

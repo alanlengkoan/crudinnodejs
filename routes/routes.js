@@ -98,7 +98,7 @@ routes.addRoute("/masuk", function (request, response) {
             halaman: 'Masuk',
             title: 'Masuk'
         };
-        myFunction.view(200, './views/masuk.html', data, request, response);
+        myFunction.view(200, 'masuk.ejs', data, request, response);
     }
 });
 
@@ -156,7 +156,7 @@ routes.addRoute("/daftar", function (request, response) {
             halaman: 'Daftar',
             title: 'Daftar'
         };
-        myFunction.view(200, './views/daftar.html', data, request, response);
+        myFunction.view(200, 'daftar.html', data, request, response);
     }
 });
 
