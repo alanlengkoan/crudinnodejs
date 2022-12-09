@@ -5,17 +5,17 @@
   "main": "app.js",
   "dependencies": {
     "bcryptjs": "^2.4.3",
-    "cookie-parser": "^1.4.6",
-    "dotenv": "^8.6.0",
-    "express": "^4.17.2",
-    "express-session": "^1.17.2",
+    "cookie-parser": "^1.4.5",
+    "dotenv": "^8.2.0",
+    "ejs": "^3.1.8",
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
     "jsonwebtoken": "^8.5.1",
     "mysql": "^2.18.1",
-    "nodemon": "^2.0.15",
-    "routes": "^2.1.0",
-    "swig": "^1.4.2"
+    "nodemon": "^2.0.6",
+    "package.json": "^0.0.0",
+    "routes": "^2.1.0"
   },
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon app.js"
@@ -25,7 +25,7 @@
     "url": "git+https://github.com/alanlengkoan/crudinnodejs.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Alan Saputra Lengkoan",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/alanlengkoan/crudinnodejs/issues"

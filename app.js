@@ -1,12 +1,11 @@
 var http = require('http');
 var url = require('url');
-var fs = require('fs');
 var myFunction = require('./helpers/my_function.js');
 
 // untuk routes
 var router = require('./routes/routes');
 // untuk host
-http.createServer(function (request, response) {
+function serverCallback(request, response) {
     var urlRequest = url.parse(request.url);
     var path = urlRequest.pathname;
     var match = router.match(path);
@@ -15,8 +14,14 @@ http.createServer(function (request, response) {
         match.fn(request, response);
     } else {
         var data = {}
-        myFunction.view(404, './views/404.html', data, request, response);
+        myFunction.view(404, '404.ejs', data, request, response);
     }
-}).listen(8000, '127.0.0.1');
+}
 
-console.log('Server sedang berjalan..');
+const server = http.createServer(serverCallback);
+const port = 8080;
+const host = 'localhost';
+
+server.listen(port, host, () => {
+    console.log(`Server berjalan pada http://${host}:${port}`);
+});

@@ -33,7 +33,7 @@ routes.addRoute("/", function (request, response) {
         halaman: 'Beranda',
         title: 'Beranda'
     };
-    myFunction.view(200, './views/base.html', data, request, response);
+    myFunction.view(200, 'home.ejs', data, request, response);
 });
 
 routes.addRoute("/tentang", function (request, response) {
@@ -41,7 +41,7 @@ routes.addRoute("/tentang", function (request, response) {
         halaman: 'Tentang',
         title: 'Tentang',
     };
-    myFunction.view(200, './views/tentang.html', data, request, response);
+    myFunction.view(200, 'tentang.ejs', data, request, response);
 });
 
 routes.addRoute("/kontak", function (request, response) {
@@ -49,7 +49,7 @@ routes.addRoute("/kontak", function (request, response) {
         halaman: 'Kontak',
         title: 'Kontak'
     };
-    myFunction.view(200, './views/kontak.html', data, request, response);
+    myFunction.view(200, 'kontak.ejs', data, request, response);
 });
 
 routes.addRoute("/masuk", function (request, response) {
@@ -98,7 +98,7 @@ routes.addRoute("/masuk", function (request, response) {
             halaman: 'Masuk',
             title: 'Masuk'
         };
-        myFunction.view(200, './views/masuk.html', data, request, response);
+        myFunction.view(200, 'masuk.ejs', data, request, response);
     }
 });
 
@@ -156,7 +156,7 @@ routes.addRoute("/daftar", function (request, response) {
             halaman: 'Daftar',
             title: 'Daftar'
         };
-        myFunction.view(200, './views/daftar.html', data, request, response);
+        myFunction.view(200, 'daftar.html', data, request, response);
     }
 });
 
